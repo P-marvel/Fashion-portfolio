@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ELARA | Fashion Design Portfolio</title>
+    <style>
+        :root {
+            --primary: #000000;
+            --secondary: #ffffff;
+            --accent: #f0db4f;
+            --text-light: #e0e0e0;
+            --text-dark: #1a1a1a;
+            --transition: all 0.5s cubic-bezier(0.65, 0, 0.35, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--primary);
+            color: var(--secondary);
+            overflow-x: hidden;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 2rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            mix-blend-mode: difference;
+            transition: var(--transition);
+        }
+
+        .navbar.scrolled {
+            background-color: rgba(0, 0, 0, 0.9);
+            padding: 1rem 5%;
+            mix-blend-mode: normal;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--secondary);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        .nav-links a {
+            color: var(--secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background-color: var(--accent);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .menu-btn {
+            display: none;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.7;
+        }
+
+        .hero-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            width: 100%;
+            padding: 0 5%;
+        }
+
+        .hero-title {
+            font-size: 6vw;
+            margin-bottom: 1rem;
+            line-height: 1;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s forwards 0.3s;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            font-weight: 300;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s forwards 0.6s;
+        }
+
+        .scroll-down {
+            position: absolute;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            opacity: 0;
+            animation: fadeIn 1s forwards 1s;
+        }
+
+        .scroll-down span {
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
+            letter-spacing: 2px;
+        }
+
+        .scroll-down .arrow {
+            width: 20px;
+            height: 30px;
+            border: 1px solid var(--secondary);
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .scroll-down .arrow::after {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 8px;
+            background-color: var(--secondary);
+            animation: scrollBounce 2s infinite;
+        }
+
+        /* About Section */
+        .section {
+            padding: 8rem 5%;
+            position: relative;
+        }
+
+        .section-title {
+            font-size: 3.5rem;
+            margin-bottom: 5rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 2px;
+            background-color: var(--accent);
+        }
+
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 5rem;
+        }
+
+        .about-img {
+            flex: 1;
+            height: 600px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .about-img:hover img {
+            transform: scale(1.05);
+        }
+
+        .about-text {
+            flex: 1;
+        }
+
+        .about-text h3 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .about-text p {
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+            font-weight: 300;
+        }
+
+        .signature {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            color: var(--accent);
+            margin-top: 2rem;
+        }
+
+        /* Collections Section */
+        .collections {
+            background-color: var(--secondary);
+            color: var(--text-dark);
+        }
+
+        .collections-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .collection-card {
+            position: relative;
+            height: 500px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .collection-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .collection-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 2rem;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+            color: var(--secondary);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .collection-card:hover .collection-overlay {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .collection-card:hover .collection-img {
+            transform: scale(1.1);
+        }
+
+        .collection-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .collection-season {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Process Section */
+        .process-steps {
+            display: flex;
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .process-step {
+            flex: 1;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: var(--transition);
+        }
+
+        .process-step:hover {
+            border-color: var(--accent);
+            transform: translateY(-10px);
+        }
+
+        .step-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            opacity: 0.3;
+        }
+
+        .step-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .step-description {
+            font-weight: 300;
+            line-height: 1.8;
+        }
+
+        /* Press Section */
+        .press-logos {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+
+        .press-logo {
+            height: 40px;
+            filter: grayscale(100%) brightness(2);
+            opacity: 0.7;
+            transition: var(--transition);
+        }
+
+        .press-logo:hover {
+            filter: grayscale(0) brightness(1);
+            opacity: 1;
+        }
+
+        /* Contact Section */
+        .contact {
+            background-color: var(--secondary);
+            color: var(--text-dark);
+        }
+
+        .contact-container {
+            display: flex;
+            gap: 5rem;
+        }
+
+        .contact-info {
+            flex: 1;
+        }
+
+        .contact-info h3 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .contact-details {
+            margin-bottom: 3rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .contact-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: var(--secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            background-color: var(--primary);
+            color: var(--secondary);
+        }
+
+        .contact-form {
+            flex: 1;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 1rem;
+            background-color: transparent;
+            border: none;
+            border-bottom: 1px solid var(--primary);
+            font-family: inherit;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-bottom-color: var(--accent);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .submit-btn {
+            background-color: var(--primary);
+            color: var(--secondary);
+            border: none;
+            padding: 1rem 2rem;
+            font-family: inherit;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .submit-btn:hover {
+            background-color: var(--accent);
+            color: var(--primary);
+        }
+
+        /* Footer */
+        footer {
+            padding: 3rem 5%;
+            text-align: center;
+            background-color: var(--primary);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .copyright {
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes scrollBounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0) translateX(-50%);
+            }
+            40% {
+                transform: translateY(-10px) translateX(-50%);
+            }
+            60% {
+                transform: translateY(-5px) translateX(-50%);
+            }
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1024px) {
+            .about-content {
+                flex-direction: column;
+            }
+
+            .about-img {
+                width: 100%;
+            }
+
+            .process-steps {
+                flex-direction: column;
+            }
+
+            .contact-container {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1.5rem 5%;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                height: 100vh;
+                background-color: var(--primary);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: var(--transition);
+                z-index: 1000;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .menu-btn {
+                display: block;
+                z-index: 1001;
+            }
+
+            .hero-title {
+                font-size: 3rem;
+            }
+
+            .section-title {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&family=Playfair+Display:wght@700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="#" class="logo">ELARA</a>
+        <div class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#collections">Collections</a>
+            <a href="#process">Process</a>
+            <a href="#press">Press</a>
+            <a href="#contact">Contact</a>
+        </div>
+        <div class="menu-btn">
+            <i class="fas fa-bars"></i>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <video class="hero-video" autoplay muted loop>
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-woman-in-a-fashion-show-15825-large.mp4" type="video/mp4">
+        </video>
+        <div class="hero-content">
+            <h1 class="hero-title">ELARA STUDIO</h1>
+            <p class="hero-subtitle">Avant-Garde Fashion Design</p>
+        </div>
+        <div class="scroll-down">
+            <span>SCROLL DOWN</span>
+            <div class="arrow"></div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section" id="about">
+        <h2 class="section-title">The Designer</h2>
+        <div class="about-content">
+            <div class="about-img">
+                <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" alt="Designer Portrait">
+            </div>
+            <div class="about-text">
+                <h3>About Elara</h3>
+                <p>With a background in fine arts and textile engineering, Elara brings a unique perspective to contemporary fashion design. Her work explores the intersection of traditional craftsmanship and futuristic aesthetics.</p>
+                <p>Graduating with honors from Central Saint Martins, Elara has since worked with leading fashion houses before launching her eponymous label in 2018. Her designs have been featured in Vogue, Harper's Bazaar, and at Paris Fashion Week.</p>
+                <p>"Fashion should challenge perceptions while remaining wearable art. I strive to create pieces that tell stories through texture, form, and movement."</p>
+                <div class="signature">Elara</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Collections Section -->
+    <section class="section collections" id="collections">
+        <h2 class="section-title">Collections</h2>
+        <div class="collections-grid">
+            <div class="collection-card">
+                <img class="collection-img" src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" alt="Collection 1">
+                <div class="collection-overlay">
+                    <h3 class="collection-title">Ethereal Shadows</h3>
+                    <p class="collection-season">Fall/Winter 2023</p>
+                </div>
+            </div>
+            <div class="collection-card">
+                <img class="collection-img" src="https://images.unsplash.com/photo-1551232864-3f0890e580d9?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" alt="Collection 2">
+                <div class="collection-overlay">
+                    <h3 class="collection-title">Urban Mythology</h3>
+                    <p class="collection-season">Spring/Summer 2023</p>
+                </div>
+            </div>
+            <div class="collection-card">
+                <img class="collection-img" src="https://images.unsplash.com/photo-1554412933-514a83d2f3c8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" alt="Collection 3">
+                <div class="collection-overlay">
+                    <h3 class="collection-title">Biomorphic</h3>
+                    <p class="collection-season">Fall/Winter 2022</p>
+                </div>
+            </div>
+            <div class="collection-card">
+                <img class="collection-img" src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" alt="Collection 4">
+                <div class="collection-overlay">
+                    <h3 class="collection-title">Neo-Romantic</h3>
+                    <p class="collection-season">Spring/Summer 2022</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="section" id="process">
+        <h2 class="section-title">Creative Process</h2>
+        <div class="process-steps">
+            <div class="process-step">
+                <div class="step-number">01</div>
+                <h3 class="step-title">Concept Development</h3>
+                <p class="step-description">Each collection begins with extensive research into art, architecture, and cultural movements. Mood boards and sketches translate these inspirations into fashion narratives.</p>
+            </div>
+            <div class="process-step">
+                <div class="step-number">02</div>
+                <h3 class="step-title">Material Exploration</h3>
+                <p class="step-description">We source sustainable, innovative fabrics and develop custom textiles through collaborations with mills worldwide. Every material is chosen for its aesthetic and environmental impact.</p>
+            </div>
+            <div class="process-step">
+                <div class="step-number">03</div>
+                <h3 class="step-title">Pattern & Construction</h3>
+                <p class="step-description">Precision pattern-making meets experimental draping techniques. Our atelier combines traditional craftsmanship with cutting-edge technology like 3D modeling.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Press Section -->
+    <section class="section" id="press">
+        <h2 class="section-title">Press & Recognition</h2>
+        <div class="press-logos">
+            <img class="press-logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Vogue_Logo.svg/800px-Vogue_Logo.svg.png" alt="Vogue">
+            <img class="press-logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Harpers_Bazaar_Logo.svg/800px-Harpers_Bazaar_Logo.svg.png" alt="Harper's Bazaar">
+            <img class="press-logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/WWD_logo.svg/800px-WWD_logo.svg.png" alt="WWD">
+            <img class="press-logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Elle_Logo.svg/800px-Elle_Logo.svg.png" alt="Elle">
+            <img class="press-logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Dazed_Logo.svg/800px-Dazed_Logo.svg.png" alt="Dazed">
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section contact" id="contact">
+        <h2 class="section-title">Contact</h2>
+        <div class="contact-container">
+            <div class="contact-info">
+                <h3>Get in Touch</h3>
+                <div class="contact-details">
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <span>123 Design Ave, Fashion District, NY 10001</span>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <span>studio@elarafashion.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone-alt"></i>
+                        </div>
+                        <span>+1 (555) 123-4567</span>
+                    </div>
+                </div>
+                <div class="social-links">
+                    <a href="#" class="social-link">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-behance"></i>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-pinterest-p"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="contact-form">
+                <form>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" class="form-control" placeholder="Email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Subject">
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-control" placeholder="Message" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">SEND MESSAGE</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-logo">ELARA</div>
+        <div class="copyright">© 2023 Elara Fashion Studio. All rights reserved.</div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const menuBtn = document.querySelector('.menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+
+        menuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            menuBtn.innerHTML = navLinks.classList.contains('active') ? 
+                '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                menuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Collection card animation on scroll
+        const collectionCards = document.querySelectorAll('.collection-card');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        collectionCards.forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(50px)';
+            card.style.transition = 'all 0.8s cubic-bezier(0.65, 0, 0.35, 1)';
+            observer.observe(card);
+        });
+
+        // Process step animation
+        const processSteps = document.querySelectorAll('.process-step');
+        processSteps.forEach((step, index) => {
+            step.style.transitionDelay = `${index * 0.2}s`;
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Form submission
+        const form = document.querySelector('form');
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Thank you for your message. We will get back to you soon!');
+            form.reset();
+        });
+    </script>
+</body>
+</html>
